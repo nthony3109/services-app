@@ -1,6 +1,8 @@
 package com.expensetracker.expenseapp.Repo;
 
 import com.expensetracker.expenseapp.Models.Expense;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,5 +20,5 @@ public interface ExpenseRepo extends JpaRepository <Expense, Long>{
            OR LOWER(e.expense_decr) LIKE LOWER(CONCAT('%', :keyword, '%'))
            OR DATE_FORMAT(e.date_time, '%d-%m-%Y') LIKE CONCAT('%', :keyword, '%')
         """, nativeQuery = true)
-    List<Expense> searchExpenses(@Param("keyword") String keyword);
+    Page<Expense> searchExpenses(@Param("keyword") String keyword, Pageable pageable);
 }
